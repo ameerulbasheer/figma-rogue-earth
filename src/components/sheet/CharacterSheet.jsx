@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { SheetHeader } from './SheetHeader'
 import { ResolveSection } from './ResolveSection'
 import { CounterPills } from './CounterPills'
@@ -7,44 +8,53 @@ import { InventoryPanel } from './InventoryPanel'
 import { NotesPanel } from './NotesPanel'
 
 export function CharacterSheet({ state, setState }) {
+  const [readyToLock, setReadyToLock] = useState({ hope: -1, courage: -1 })
+
   function handleHeaderChange(field, value) {
     setState(s => ({ ...s, [field]: value }))
   }
 
   function handleResolveToggle(track, index) {
-    setState(s => {
-      const t = s.resolve[track]
-      if (index >= t.unlocked) {
-        // clicking a locked slot: unlock up to and including it
-        return {
-          ...s,
-          resolve: {
-            ...s.resolve,
-            [track]: { ...t, unlocked: index + 1 },
-          },
-        }
-      }
-      if (index === t.unlocked - 1 && index >= t.filled) {
-        // last acquired slot, currently empty → lock it back
-        return {
-          ...s,
-          resolve: {
-            ...s.resolve,
-            [track]: { ...t, unlocked: index },
-          },
-        }
-      }
-      // clicking filled slot: set filled = index (unfill from here)
-      // clicking empty acquired slot: fill up to index + 1
-      const newFilled = index < t.filled ? index : index + 1
-      return {
+    const t = state.resolve[track]
+
+    if (index >= t.unlocked) {
+      // clicking a locked slot: unlock up to and including it
+      setReadyToLock(prev => ({ ...prev, [track]: -1 }))
+      setState(s => ({
         ...s,
-        resolve: {
-          ...s.resolve,
-          [track]: { ...t, filled: newFilled },
-        },
-      }
-    })
+        resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: index + 1 } },
+      }))
+      return
+    }
+
+    if (index === t.unlocked - 1 && index < t.filled) {
+      // last unlocked slot, currently filled → unfill and mark ready to lock
+      setReadyToLock(prev => ({ ...prev, [track]: index }))
+      setState(s => ({
+        ...s,
+        resolve: { ...s.resolve, [track]: { ...s.resolve[track], filled: index } },
+      }))
+      return
+    }
+
+    if (index === t.unlocked - 1 && index >= t.filled && readyToLock[track] === index) {
+      // last unlocked slot, currently empty, was just unfilled → lock it back
+      setReadyToLock(prev => ({ ...prev, [track]: -1 }))
+      setState(s => ({
+        ...s,
+        resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: index } },
+      }))
+      return
+    }
+
+    // clicking filled slot: unfill from here
+    // clicking empty slot: fill up to and including it
+    const newFilled = index < t.filled ? index : index + 1
+    setReadyToLock(prev => ({ ...prev, [track]: -1 }))
+    setState(s => ({
+      ...s,
+      resolve: { ...s.resolve, [track]: { ...s.resolve[track], filled: newFilled } },
+    }))
   }
 
   function handleVirtueChange(field, value) {
