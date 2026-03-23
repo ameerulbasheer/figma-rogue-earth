@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide number input spinners globally */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+@layer base {
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background-color: white;
+    color: #4E4E4E;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  textarea {
+    outline: none;
+  }
+}
+
+@layer utilities {
+  .font-mono-rogue {
+    font-family: 'Share Tech Mono', monospace;
+  }
+}
