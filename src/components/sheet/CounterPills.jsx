@@ -8,7 +8,7 @@ export function CounterPills({ growth, sync, chits, onChange }) {
       <div className="flex justify-around px-2 py-2">
         <Counter label="Growth" value={growth} onChange={v => onChange('growth', v)} />
         <Counter label="Sync"   value={sync}   onChange={v => onChange('sync', v)} />
-        <Counter label="Chits"  value={chits}  onChange={v => onChange('chits', v)} />
+        <Counter label="Chits"  value={chits}  onChange={v => onChange('chits', v)} variant="number" />
       </div>
     </div>
   )
