@@ -7,11 +7,11 @@ import { IntermissionMoves } from './IntermissionMoves'
 
 export function RulesReference() {
   return (
-    <div className="flex flex-col gap-6 p-4 min-w-[760px] max-w-[842px] mx-auto">
+    <div className="flex flex-col gap-6 p-4 w-full max-w-[842px] mx-auto">
       <div className="font-mono text-xl text-dark-grey border-b-2 border-dark-grey pb-2">
         Rules Reference
       </div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col gap-6">
           <BasicMoves />
           <VirtueAndTormentRules />

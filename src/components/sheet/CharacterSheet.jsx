@@ -7,7 +7,7 @@ import { NecessitySection } from './NecessitySection'
 import { InventoryPanel } from './InventoryPanel'
 import { NotesPanel } from './NotesPanel'
 
-export function CharacterSheet({ state, setState }) {
+export function CharacterSheet({ state, setState, mobileTab = 'sheet' }) {
   const [readyToLock, setReadyToLock] = useState({ hope: -1, courage: -1 })
 
   function handleHeaderChange(field, value) {
@@ -77,16 +77,24 @@ export function CharacterSheet({ state, setState }) {
     setState(s => ({ ...s, necessities: next }))
   }
 
+  const leftColClass = mobileTab === 'log'
+    ? 'hidden md:flex md:flex-col md:gap-4'
+    : 'flex flex-col gap-4'
+
+  const rightColClass = mobileTab === 'sheet'
+    ? 'hidden md:flex md:flex-col md:gap-4'
+    : 'flex flex-col gap-4'
+
   return (
-    <div className="flex flex-col gap-4 p-4 min-w-[760px] max-w-[842px] mx-auto">
+    <div className="flex flex-col gap-4 p-4 w-full max-w-[842px] mx-auto">
       <SheetHeader
         name={state.name}
         description={state.description}
         onChange={handleHeaderChange}
       />
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col gap-4">
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
+        <div className={leftColClass}>
           <ResolveSection
             resolve={state.resolve}
             virtue={state.virtue}
@@ -101,16 +109,16 @@ export function CharacterSheet({ state, setState }) {
             chits={state.chits}
             onChange={handleCounterChange}
           />
-          <NecessitySection
-            necessities={state.necessities}
-            onChange={handleNecessitiesChange}
-          />
-        </div>
-
-        <div className="flex flex-col gap-4">
           <ExperienceSection
             experiences={state.experiences}
             onChange={handleExperiencesChange}
+          />
+        </div>
+
+        <div className={rightColClass}>
+          <NecessitySection
+            necessities={state.necessities}
+            onChange={handleNecessitiesChange}
           />
           <InventoryPanel
             inventory={state.inventory}
