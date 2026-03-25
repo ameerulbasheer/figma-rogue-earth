@@ -32,7 +32,10 @@ describe('CourageTracker', () => {
 
   it('all slots locked when unlocked=0', () => {
     const buttons = getCourageButtons({ unlocked: 0, filled: 0 })
-    buttons.forEach(btn => expect(btn).toHaveAttribute('aria-label', 'Locked slot'))
+    expect(buttons[0]).toHaveAttribute('aria-label', 'Empty slot')
+    expect(buttons[1]).toHaveAttribute('aria-label', 'Empty slot')
+    expect(buttons[2]).toHaveAttribute('aria-label', 'Locked slot')
+    expect(buttons[5]).toHaveAttribute('aria-label', 'Locked slot')
   })
 
   it('calls onToggle with correct index when slot is clicked', () => {

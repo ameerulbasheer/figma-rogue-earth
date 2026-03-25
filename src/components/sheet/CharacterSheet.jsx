@@ -22,14 +22,16 @@ export function CharacterSheet({ state, setState, mobileTab = 'sheet' }) {
       setReadyToLock(prev => ({ ...prev, [track]: -1 }))
       setState(s => ({
         ...s,
-        resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: index + 1 } },
+        resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: Math.max(index + 1, 2) } },
       }))
       return
     }
 
     if (index === t.unlocked - 1 && index < t.filled) {
-      // last unlocked slot, currently filled → unfill and mark ready to lock
-      setReadyToLock(prev => ({ ...prev, [track]: index }))
+      // last unlocked slot, currently filled → unfill and mark ready to lock (but not for first 2)
+      if (index >= 2) {
+        setReadyToLock(prev => ({ ...prev, [track]: index }))
+      }
       setState(s => ({
         ...s,
         resolve: { ...s.resolve, [track]: { ...s.resolve[track], filled: index } },
@@ -38,12 +40,14 @@ export function CharacterSheet({ state, setState, mobileTab = 'sheet' }) {
     }
 
     if (index === t.unlocked - 1 && index >= t.filled && readyToLock[track] === index) {
-      // last unlocked slot, currently empty, was just unfilled → lock it back
-      setReadyToLock(prev => ({ ...prev, [track]: -1 }))
-      setState(s => ({
-        ...s,
-        resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: index } },
-      }))
+      // last unlocked slot, currently empty, was just unfilled → lock it back (but not for first 2)
+      if (index >= 2) {
+        setReadyToLock(prev => ({ ...prev, [track]: -1 }))
+        setState(s => ({
+          ...s,
+          resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: Math.max(index, 2) } },
+        }))
+      }
       return
     }
 

@@ -10,7 +10,7 @@ export function HopeTracker({ hope, onToggle }) {
       <span className="font-mono text-xs text-dark-grey uppercase tracking-widest">Hope</span>
       <div className="flex gap-2 items-center">
         {Array.from({ length: MAX_SLOTS }).map((_, i) => {
-          const variant = i < filled ? 'filled' : i < unlocked ? 'empty' : 'locked'
+          const variant = i < filled ? 'filled' : (i < unlocked || i < 2) ? 'empty' : 'locked'
           return (
             <Checkbox
               key={i}

@@ -26,71 +26,71 @@ function getCourageSlots(resolve) {
 describe('Hope resolve toggle — 4-state cycle', () => {
   it('clicking a locked slot unlocks it (locked → empty)', () => {
     const slots = getHopeSlots({
-      hope: { unlocked: 0, filled: 0 },
+      hope: { unlocked: 2, filled: 1 },
       courage: { unlocked: 2, filled: 1 },
     })
 
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Locked slot')
-    fireEvent.click(slots()[0])
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Empty slot')
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Locked slot')
+    fireEvent.click(slots()[2])
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Empty slot')
   })
 
   it('clicking an empty last-unlocked slot fills it (empty → filled)', () => {
     const slots = getHopeSlots({
-      hope: { unlocked: 1, filled: 0 },
+      hope: { unlocked: 3, filled: 2 },
       courage: { unlocked: 2, filled: 1 },
     })
 
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Empty slot')
-    fireEvent.click(slots()[0])
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Filled slot')
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Empty slot')
+    fireEvent.click(slots()[2])
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Filled slot')
   })
 
   it('clicking a filled last-unlocked slot unfills it (filled → empty), does NOT lock', () => {
     const slots = getHopeSlots({
-      hope: { unlocked: 1, filled: 1 },
+      hope: { unlocked: 3, filled: 3 },
       courage: { unlocked: 2, filled: 1 },
     })
 
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Filled slot')
-    fireEvent.click(slots()[0])
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Empty slot')
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Filled slot')
+    fireEvent.click(slots()[2])
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Empty slot')
   })
 
   it('clicking empty last-unlocked slot after an unfill locks it (empty → locked)', () => {
     const slots = getHopeSlots({
-      hope: { unlocked: 1, filled: 1 },
+      hope: { unlocked: 3, filled: 3 },
       courage: { unlocked: 2, filled: 1 },
     })
 
     // filled → empty (sets readyToLock)
-    fireEvent.click(slots()[0])
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Empty slot')
+    fireEvent.click(slots()[2])
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Empty slot')
 
     // empty → locked (readyToLock triggers)
-    fireEvent.click(slots()[0])
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Locked slot')
+    fireEvent.click(slots()[2])
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Locked slot')
   })
 
   it('the full 4-state cycle: locked → empty → filled → empty → locked', () => {
     const slots = getHopeSlots({
-      hope: { unlocked: 0, filled: 0 },
+      hope: { unlocked: 2, filled: 1 },
       courage: { unlocked: 2, filled: 1 },
     })
 
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Locked slot')
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Locked slot')
 
-    fireEvent.click(slots()[0]) // locked → empty
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Empty slot')
+    fireEvent.click(slots()[2]) // locked → empty
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Empty slot')
 
-    fireEvent.click(slots()[0]) // empty → filled
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Filled slot')
+    fireEvent.click(slots()[2]) // empty → filled
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Filled slot')
 
-    fireEvent.click(slots()[0]) // filled → empty (readyToLock set)
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Empty slot')
+    fireEvent.click(slots()[2]) // filled → empty (readyToLock set)
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Empty slot')
 
-    fireEvent.click(slots()[0]) // empty → locked (readyToLock consumed)
-    expect(slots()[0]).toHaveAttribute('aria-label', 'Locked slot')
+    fireEvent.click(slots()[2]) // empty → locked (readyToLock consumed)
+    expect(slots()[2]).toHaveAttribute('aria-label', 'Locked slot')
   })
 })
 
@@ -165,13 +165,13 @@ describe('Courage resolve toggle', () => {
   it('courage 4-state cycle is independent of hope', () => {
     const courageSlots = getCourageSlots({
       hope: { unlocked: 2, filled: 1 },
-      courage: { unlocked: 1, filled: 1 },
+      courage: { unlocked: 3, filled: 3 },
     })
 
-    expect(courageSlots()[0]).toHaveAttribute('aria-label', 'Filled slot')
-    fireEvent.click(courageSlots()[0]) // filled → empty
-    expect(courageSlots()[0]).toHaveAttribute('aria-label', 'Empty slot')
-    fireEvent.click(courageSlots()[0]) // empty → locked
-    expect(courageSlots()[0]).toHaveAttribute('aria-label', 'Locked slot')
+    expect(courageSlots()[2]).toHaveAttribute('aria-label', 'Filled slot')
+    fireEvent.click(courageSlots()[2]) // filled → empty
+    expect(courageSlots()[2]).toHaveAttribute('aria-label', 'Empty slot')
+    fireEvent.click(courageSlots()[2]) // empty → locked
+    expect(courageSlots()[2]).toHaveAttribute('aria-label', 'Locked slot')
   })
 })
