@@ -39,6 +39,16 @@ npm run preview
 
 ## Deployment
 
+This app requires Supabase environment variables for authentication and sheet persistence.
+Create a `.env` file at the project root with:
+
+```env
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+This file is ignored by Git.
+
 This app is a static site — any static host works. For Vercel:
 
 1. Push the repo to GitHub
