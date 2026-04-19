@@ -5,31 +5,44 @@ export function IntermissionMoves() {
     <div className="flex flex-col gap-2">
       <SectionHeader>Intermission Moves</SectionHeader>
       <div className="px-3 py-2 font-body text-sm text-dark-grey flex flex-col gap-3">
-        <p>
-          Between sessions or story arcs, the group enters an <strong>Intermission</strong>. Each character takes two Intermission moves. Necessities must be paid before moves are taken.
-        </p>
-        <div className="border-l-2 border-dark-grey pl-3 flex flex-col gap-2">
-          <IntermissionMove name="Recover" text="Fill all empty Hope and Courage slots. Remove all conditions." />
-          <IntermissionMove name="Gather Resources" text="Collect Chits up to your current Necessity collect targets. Describe how." />
-          <IntermissionMove name="Pursue a Lead" text="Roll +HOPE. On 10+, you gain concrete information about a threat, opportunity, or person. On 7–9, you gain a rumour or partial truth. On 6−, a complication arises." />
-          <IntermissionMove name="Strengthen a Bond" text="Write a new or deepen an existing bond with another character or NPC. If with a PC, both must agree." />
-          <IntermissionMove name="Study" text="Mark an Experience as being actively studied. At the next Intermission it upgrades from Learned to Practiced for free." />
-          <IntermissionMove name="Lay Low" text="Avoid attention. Take +1 forward to any move to avoid detection next session." />
-          <IntermissionMove name="Spend Growth" text="Spend Growth points to take Growth moves." />
-        </div>
-        <p className="text-xs text-mid-grey italic">
-          Necessity upkeep: subtract each necessity's Upkeep value from your stockpile. If a necessity drops to 0, the GM narrates a consequence at the start of the next session.
-        </p>
+        <p>Intermission happens between sessions, during which you may perform one Intermission move.</p>
+
+        <IntermissionMove
+          name="Flashback"
+          description="Discuss with the GM to write down a new learned Experience in an empty slot in order to expand on character background or foreshadow character development."
+        />
+        <IntermissionMove
+          name="Reflect"
+          description="Swap around your Experiences."
+        />
+        <IntermissionMove
+          name="Extended Downtime"
+          description="When your character has at least a few days of downtime, you can use this move. Choose two:"
+          options={[
+            "Procure supplies: Choose a starting pack of chits and necessities (see Character Creation).",
+            "Take on responsibility: Add a new Necessity at Collect 10.",
+            "Investigate and explore: Glean new information about your next venture."
+          ]}
+          effect="At the end of downtime, everyone's Hope and Courage are reset to half of their total Hope/Courage slots, and the GM gains +1 Hazard per player."
+        />
       </div>
     </div>
   )
 }
 
-function IntermissionMove({ name, text }) {
+function IntermissionMove({ name, description, options, effect }) {
   return (
-    <div>
-      <div className="font-mono font-bold text-sm">{name}</div>
-      <p className="text-xs mt-0.5">{text}</p>
+    <div className="border-l-2 border-dark-grey pl-3">
+      <div className="font-mono font-bold text-dark-grey mb-1">{name}</div>
+      <div className="text-xs text-mid-grey mb-2">{description}</div>
+      {options && (
+        <ul className="text-xs text-mid-grey mb-2 ml-2">
+          {options.map((option, index) => (
+            <li key={index} className="mb-1">• {option}</li>
+          ))}
+        </ul>
+      )}
+      {effect && <div className="text-xs text-mid-grey italic">{effect}</div>}
     </div>
   )
 }

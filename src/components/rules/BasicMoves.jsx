@@ -6,65 +6,31 @@ export function BasicMoves() {
       <SectionHeader>Basic Moves</SectionHeader>
       <div className="px-3 py-2 font-body text-sm text-dark-grey flex flex-col gap-3">
         <Move
-          name="Act Under Pressure"
-          trigger="When you act despite danger, opposition, or fear"
-          roll="Roll +COURAGE"
-          results={[
-            { range: '10+', text: 'You do it. Take +1 forward.' },
-            { range: '7–9', text: 'You do it, but the GM offers you a worse outcome, hard bargain, or ugly choice.' },
-            { range: '6−', text: 'The GM makes a move.' },
+          name="Action Roll"
+          description="When your character wants to undertake a challenging (not impossible) action that has narrative consequences, the GM will call for you to make an Action roll."
+          mechanics="Before you roll, you can discuss with the GM if your character's Experience can apply to your Action roll. Then, roll 2d6 and calculate the Difference between dice values to determine the degree of success. The smaller the Difference, the better."
+          outcomes={[
+            { range: '0', text: '⚀⚀ – Full success, +1 Hope/Courage, +1 Sync, take another turn or spotlight an ally' },
+            { range: '1', text: '⚀⚁ – Mixed success, +1 Sync' },
+            { range: '2', text: '⚀⚂ – Fail forwards, (GM) +1 Hazard' },
+            { range: '3-4', text: '⚀⚄ – Fail, (GM) +1 Hazard' },
+            { range: '5', text: '⚀⚅ – Fail, (GM) +2 Hazard' }
           ]}
         />
         <Move
-          name="Help or Hinder"
-          trigger="When you help or hinder another character"
-          roll="Roll +HOPE (help) or +COURAGE (hinder)"
-          results={[
-            { range: '10+', text: 'They take +1 or −2 to their roll.' },
-            { range: '7–9', text: 'They take +1 or −1, but you share in any consequences.' },
-            { range: '6−', text: 'The GM makes a move.' },
-          ]}
+          name="Reaction Roll"
+          description="You make a Reaction roll in response to certain triggers, like when your character's resolve is tested (see Test Resolve under Virtue and Torment)."
+          mechanics="To resolve a Reaction roll, follow the same steps for an Action roll and calculate the Difference. The possible outcomes of a Reaction roll is determined by its trigger."
         />
         <Move
-          name="Read a Person"
-          trigger="When you study someone's intentions or emotions"
-          roll="Roll +HOPE"
-          results={[
-            { range: '10+', text: 'Ask the player or GM three questions from the list; they must answer honestly.' },
-            { range: '7–9', text: 'Ask one question.' },
-            { range: '6−', text: 'The GM makes a move.' },
-          ]}
-          extra="Questions: What do you really want? What are you afraid of? What do you need from me? Are you lying? How can I help you?"
-        />
-        <Move
-          name="Assess the Situation"
-          trigger="When you take stock of your surroundings or gather information"
-          roll="Roll +HOPE"
-          results={[
-            { range: '10+', text: 'Ask three questions; take +1 forward for each answer you act on.' },
-            { range: '7–9', text: 'Ask one question; take +1 forward if you act on the answer.' },
-            { range: '6−', text: 'The GM makes a move.' },
-          ]}
-          extra="Questions: What is the biggest threat? What is hidden or unseen? What is the safest path? Who or what controls this place? What can I use to my advantage?"
-        />
-        <Move
-          name="Persuade or Manipulate"
-          trigger="When you try to convince someone to do something"
-          roll="Roll +HOPE (honest) or +COURAGE (coercion)"
-          results={[
-            { range: '10+', text: 'They do it; if NPC they also act in your interest.' },
-            { range: '7–9', text: 'They need proof, a favour, or reassurance first.' },
-            { range: '6−', text: 'The GM makes a move.' },
-          ]}
-        />
-        <Move
-          name="Take a Risk"
-          trigger="When you do something risky with no better move"
-          roll="Roll +COURAGE"
-          results={[
-            { range: '10+', text: 'You succeed fully.' },
-            { range: '7–9', text: 'You succeed, but mark one stress or face a consequence.' },
-            { range: '6−', text: 'The GM makes a move.' },
+          name="Group Roll"
+          description="The leader for the Group roll makes an Action roll, while everybody else makes a Reaction roll; the majority result will be the ultimate result of the Group roll."
+          mechanics="In the case of a tie, take the worse result. If the leader of the Group roll is using an Experience, he can use it to improve the result of the other players' Reaction rolls (once for each player)."
+          outcomes={[
+            { range: '0', text: '⚀⚀ – Full success' },
+            { range: '1', text: '⚀⚁ – Mixed success' },
+            { range: '2', text: '⚀⚂ – Fail forwards' },
+            { range: '3-5', text: '⚅ – Fail' }
           ]}
         />
       </div>
@@ -72,20 +38,22 @@ export function BasicMoves() {
   )
 }
 
-function Move({ name, trigger, roll, results, extra }) {
+function Move({ name, description, mechanics, outcomes, extra }) {
   return (
     <div className="border-l-2 border-dark-grey pl-3">
       <div className="font-mono font-bold text-dark-grey">{name}</div>
-      <div className="text-xs text-mid-grey italic mb-1">{trigger}</div>
-      <div className="font-mono text-xs text-dark-grey mb-1">{roll}</div>
-      <ul className="flex flex-col gap-0.5">
-        {results.map(r => (
-          <li key={r.range} className="flex gap-2 text-xs">
-            <span className="font-mono font-bold flex-shrink-0 w-10">{r.range}</span>
-            <span>{r.text}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="text-xs text-mid-grey mb-2">{description}</div>
+      {mechanics && <div className="text-xs text-dark-grey mb-2 italic">{mechanics}</div>}
+      {outcomes && (
+        <ul className="flex flex-col gap-0.5 mb-2">
+          {outcomes.map(r => (
+            <li key={r.range} className="flex gap-2 text-xs">
+              <span className="font-mono font-bold flex-shrink-0 w-16">Diff {r.range}</span>
+              <span>{r.text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {extra && <div className="text-xs text-mid-grey mt-1 italic">{extra}</div>}
     </div>
   )
