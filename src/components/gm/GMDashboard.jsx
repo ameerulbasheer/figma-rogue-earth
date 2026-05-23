@@ -65,7 +65,7 @@ export function GMDashboard() {
 
       {selected && (
         <div className="pointer-events-none select-none">
-          <CharacterSheet state={selected.data} setState={() => {}} mobileTab="sheet" />
+          <CharacterSheet state={selected.data} setState={() => {}} mobileTab="sheet" readOnly={true} />
         </div>
       )}
     </div>

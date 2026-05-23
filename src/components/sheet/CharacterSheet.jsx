@@ -7,7 +7,7 @@ import { NecessitySection } from './NecessitySection'
 import { InventoryPanel } from './InventoryPanel'
 import { NotesPanel } from './NotesPanel'
 
-export function CharacterSheet({ state, setState, mobileTab = 'sheet' }) {
+export function CharacterSheet({ state, setState, mobileTab = 'sheet', readOnly = false }) {
   const [readyToLock, setReadyToLock] = useState({ hope: -1, courage: -1 })
 
   function handleHeaderChange(field, value) {
@@ -85,7 +85,9 @@ export function CharacterSheet({ state, setState, mobileTab = 'sheet' }) {
     ? 'hidden md:flex md:flex-col md:gap-4'
     : 'flex flex-col gap-4'
 
-  const rightColClass = mobileTab === 'sheet'
+  const rightColClass = readOnly
+    ? 'flex flex-col gap-4'
+    : mobileTab === 'sheet'
     ? 'hidden md:flex md:flex-col md:gap-4'
     : 'flex flex-col gap-4'
 
