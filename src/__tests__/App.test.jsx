@@ -1,8 +1,22 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import { initialState } from '../constants/initialState'
+
+const mockUser = { id: 'test-user', email: 'test@example.com' }
+const mockSetState = vi.fn()
+
+vi.mock('../hooks/useAuth', () => ({
+  useAuth: () => ({ user: mockUser, loading: false }),
+}))
+
+vi.mock('../hooks/useCharacter', () => ({
+  useCharacter: () => [initialState, mockSetState, false],
+}))
+
 import App from '../App'
 
 beforeEach(() => {
   localStorage.clear()
+  mockSetState.mockClear()
 })
 
 describe('App — navigation structure', () => {
