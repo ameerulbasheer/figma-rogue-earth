@@ -22,8 +22,8 @@ export function NecessitySection({ necessities, onChange }) {
         <div className="flex gap-2 items-center">
           <span className="flex-1" />
           <span className="w-16 flex-shrink-0 font-mono text-[10px] text-mid-grey text-center">mode</span>
-          <span className="w-8 flex-shrink-0 font-mono text-[10px] text-mid-grey text-center">amt</span>
-          <span className="w-14 flex-shrink-0 font-mono text-[10px] text-mid-grey text-center">qty</span>
+          <span className="w-8 flex-shrink-0 font-mono text-[10px] text-mid-grey text-center">value</span>
+          <span className="w-14 flex-shrink-0 font-mono text-[10px] text-mid-grey text-center">inventory</span>
           <span className="w-4 flex-shrink-0" />
         </div>
         {necessities.map((nec, i) => (
