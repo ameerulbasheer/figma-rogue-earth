@@ -41,7 +41,10 @@ export function RestMoves() {
 
           <div className="mb-2">
             <div className="font-mono text-xs font-bold text-dark-grey mb-1">Sleep: You MUST sleep</div>
-            <div className="text-xs text-mid-grey">Comfortable sleep: +1 Hope, +1 Courage. Refuse Sleep, -1 Hope, -1 Courage.</div>
+            <div className="text-xs text-mid-grey ml-2">
+              <div className="mb-1">• Comfortable sleep: +1 Hope, +1 Courage.</div>
+              <div className="mb-1">• Refuse Sleep, -1 Hope, -1 Courage.</div>
+            </div>
           </div>
         </div>
 
