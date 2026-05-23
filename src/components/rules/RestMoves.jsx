@@ -36,8 +36,12 @@ export function RestMoves() {
               <div className="mb-1">• Explore Vicinity: Look for an opportunity nearby. Together: Additional +1 Hope/Courage.</div>
               <div className="mb-1">• Extra Preparations: +2 Courage. Together: +3 Courage instead.</div>
               <div className="mb-1">• Self-Expression: +2 Hope. Together: +3 Hope instead.</div>
-              <div>• Sleep: You MUST sleep. Comfortable sleep: +1 Hope, +1 Courage. Refuse Sleep, -1 Hope, -1 Courage.</div>
             </div>
+          </div>
+
+          <div className="mb-2">
+            <div className="font-mono text-xs font-bold text-dark-grey mb-1">Sleep: You MUST sleep</div>
+            <div className="text-xs text-mid-grey">Comfortable sleep: +1 Hope, +1 Courage. Refuse Sleep, -1 Hope, -1 Courage.</div>
           </div>
         </div>
 
