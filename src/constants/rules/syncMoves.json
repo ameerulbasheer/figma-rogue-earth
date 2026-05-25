@@ -1,0 +1,36 @@
+{
+  "title": "Sync Moves",
+  "intro": "Gain 1 Sync whenever you succeed (Difference 0-1) on an Action roll.",
+  "moves": [
+    {
+      "cost": "2 Sync",
+      "name": "Help",
+      "description": "When an ally makes an Action roll, you can use this move to roll an additional d6. You must substitute one of their Action roll dice with it."
+    },
+    {
+      "cost": "2 Sync",
+      "name": "Practiced Defence",
+      "description": "During an Adversary roll (against you or an ally), you may invoke a relevant practiced Experience to negate one adversary dice that matches the dice value of the Experience in order to negate the hit."
+    },
+    {
+      "cost": "2 Sync",
+      "name": "Try Something Else",
+      "description": "When you get anything less than a full success on an Action or Reaction roll using an Experience, you can use a different practiced Experience instead in order to get a better result."
+    },
+    {
+      "cost": "3 Sync",
+      "name": "I'll Take Over",
+      "description": "Take over as leader of a Group roll before the final results are resolved."
+    },
+    {
+      "cost": "5 Sync split between players, once per session",
+      "name": "Tag Team",
+      "description": "On your own turn, you may start a Tag Team with an ally. Roll 4d6 together and select two dice to use for a shared Action roll. Apply the result twice (once for each player)."
+    },
+    {
+      "cost": "10 Sync split between players",
+      "name": "Not Done Yet",
+      "description": "When an ally has no Hope or Courage left, you can initiate this move. Divide 8 Hope and 8 Courage between all players involved."
+    }
+  ]
+}

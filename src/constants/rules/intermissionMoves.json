@@ -1,0 +1,24 @@
+{
+  "title": "Intermission Moves",
+  "intro": "Intermission happens between sessions, during which you may perform one Intermission move.",
+  "moves": [
+    {
+      "name": "Flashback",
+      "description": "Discuss with the GM to write down a new learned Experience in an empty slot in order to expand on character background or foreshadow character development."
+    },
+    {
+      "name": "Reflect",
+      "description": "Swap around your Experiences."
+    },
+    {
+      "name": "Extended Downtime",
+      "description": "When your character has at least a few days of downtime, you can use this move. Choose two:",
+      "options": [
+        "Procure supplies: Choose a starting pack of chits and necessities (see Character Creation).",
+        "Take on responsibility: Add a new Necessity at Collect 10.",
+        "Investigate and explore: Glean new information about your next venture."
+      ],
+      "effect": "At the end of downtime, everyone's Hope and Courage are reset to half of their total Hope/Courage slots, and the GM gains +1 Hazard per player."
+    }
+  ]
+}

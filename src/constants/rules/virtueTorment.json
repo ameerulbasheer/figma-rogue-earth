@@ -1,0 +1,43 @@
+{
+  "title": "Virtue & Torment",
+  "sections": [
+    {
+      "heading": "Test Resolve",
+      "body": "When you Test Resolve, make a Reaction roll.",
+      "outcomes": [
+        { "range": "Diff 0-1", "text": "Become Virtuous" },
+        { "range": "Diff 2+", "text": "Become Tormented" }
+      ]
+    },
+    {
+      "heading": "Virtue",
+      "body": "The following are in effect whenever you receive your Virtue Condition",
+      "subsections": [
+        {
+          "heading": "Stalwart [HOPE]",
+          "text": "Whenever you make an Action roll in line with your Virtue, +1 Hope. If your Hope Slots are already full, give +1 Hope to an ally."
+        },
+        {
+          "heading": "Virtue [COURAGE]",
+          "text": "Whenever you make an Action roll in line with your Virtue, +1 Courage. If your Courage Slots are already full, give +1 Courage to an ally."
+        }
+      ],
+      "footer": "Clear Virtuous at the end of rest or during travel."
+    },
+    {
+      "heading": "Torment",
+      "body": "The following are in effect whenever you receive your Torment Condition",
+      "subsections": [
+        {
+          "heading": "Torment [HOPE]",
+          "text": "You cannot gain Hope. Whenever you make an Action roll in accordance with your Torment, you may Test Resolve again."
+        },
+        {
+          "heading": "Torment [COURAGE]",
+          "text": "You cannot gain Courage. Whenever you make an Action roll in accordance with your Torment, you may Test Resolve again."
+        }
+      ],
+      "footer": "Clear Tormented at the end of rest or during travel."
+    }
+  ]
+}

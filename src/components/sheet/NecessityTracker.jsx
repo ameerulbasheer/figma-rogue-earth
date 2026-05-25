@@ -1,8 +1,10 @@
+import { memo } from 'react'
+
 // Single necessity row.
 // Column widths — must match NecessitySection header
 // mode: w-16 | amt: w-8 | qty: w-14 | remove: w-4
 
-export function NecessityTracker({ necessity, onChange, onRemove }) {
+export const NecessityTracker = memo(function NecessityTracker({ necessity, onChange, onRemove, readOnly }) {
   const { name, upkeep, collect, qty } = necessity
   const isCollectMode = collect !== null
 
@@ -17,12 +19,14 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
         value={name}
         onChange={e => onChange('name', e.target.value)}
         placeholder="Necessity…"
+        readOnly={readOnly}
         className="flex-1 min-w-0 font-body text-sm bg-transparent text-dark-grey placeholder:text-light-grey"
       />
       <button
         type="button"
         onClick={toggleMode}
-        className="w-16 flex-shrink-0 font-mono text-xs border border-dark-grey px-1 rounded cursor-pointer text-center"
+        disabled={readOnly}
+        className={`w-16 flex-shrink-0 font-mono text-xs border px-1 rounded text-center ${readOnly ? 'border-light-grey text-light-grey cursor-default' : 'border-dark-grey cursor-pointer'}`}
         title="Toggle Upkeep/Collect mode"
       >
         {isCollectMode ? 'COLLECT' : 'UPKEEP'}
@@ -32,7 +36,8 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
           type="number"
           value={collect}
           onChange={e => onChange('collect', Number(e.target.value))}
-          className="w-8 flex-shrink-0 font-mono text-xs text-center border-b border-dashed border-mid-grey bg-transparent text-dark-grey"
+          readOnly={readOnly}
+          className={`w-8 flex-shrink-0 font-mono text-xs text-center border-b border-dashed bg-transparent ${readOnly ? 'border-light-grey text-light-grey' : 'border-mid-grey text-dark-grey'}`}
           min={0}
         />
       ) : (
@@ -40,7 +45,8 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
           type="number"
           value={upkeep}
           onChange={e => onChange('upkeep', Number(e.target.value))}
-          className="w-8 flex-shrink-0 font-mono text-xs text-center border-b border-dashed border-mid-grey bg-transparent text-dark-grey"
+          readOnly={readOnly}
+          className={`w-8 flex-shrink-0 font-mono text-xs text-center border-b border-dashed bg-transparent ${readOnly ? 'border-light-grey text-light-grey' : 'border-mid-grey text-dark-grey'}`}
           min={0}
         />
       )}
@@ -48,7 +54,8 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
         <button
           type="button"
           onClick={() => onChange('qty', Math.max(0, qty - 1))}
-          className="font-mono text-xs text-dark-grey leading-none cursor-pointer"
+          disabled={readOnly}
+          className={`font-mono text-xs leading-none ${readOnly ? 'text-light-grey cursor-default' : 'text-dark-grey cursor-pointer'}`}
         >
           −
         </button>
@@ -56,7 +63,8 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
         <button
           type="button"
           onClick={() => onChange('qty', qty + 1)}
-          className="font-mono text-xs text-dark-grey leading-none cursor-pointer"
+          disabled={readOnly}
+          className={`font-mono text-xs leading-none ${readOnly ? 'text-light-grey cursor-default' : 'text-dark-grey cursor-pointer'}`}
         >
           +
         </button>
@@ -66,7 +74,8 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
           <button
             type="button"
             onClick={onRemove}
-            className="font-mono text-xs text-mid-grey hover:text-dark-grey leading-none cursor-pointer"
+            disabled={readOnly}
+            className={`font-mono text-xs leading-none ${readOnly ? 'text-light-grey cursor-default' : 'text-mid-grey hover:text-dark-grey cursor-pointer'}`}
             title="Remove"
           >
             ×
@@ -75,4 +84,4 @@ export function NecessityTracker({ necessity, onChange, onRemove }) {
       </div>
     </div>
   )
-}
+})

@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { Checkbox } from '../common/Checkbox'
 
 const MAX_SLOTS = 6
 
-export function HopeTracker({ hope, onToggle }) {
+export const HopeTracker = memo(function HopeTracker({ hope, onToggle, disabled }) {
   const { unlocked, filled } = hope
 
   return (
@@ -17,10 +18,11 @@ export function HopeTracker({ hope, onToggle }) {
               variant={variant}
               onClick={() => onToggle(i)}
               alert={variant === 'empty' && i === 0 && filled === 0}
+              disabled={disabled}
             />
           )
         })}
       </div>
     </div>
   )
-}
+})

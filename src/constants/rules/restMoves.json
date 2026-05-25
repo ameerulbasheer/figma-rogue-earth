@@ -1,0 +1,49 @@
+{
+  "title": "Rest Moves",
+  "sections": [
+    {
+      "heading": "Short Rest",
+      "intro": "Perform Short Rest Moves (up to once each) whenever you take a breather (10-30 minutes). You may choose to do so alone or Together (effects apply to every player involved). At the end of the short rest, the GM gains 2 Hazard.",
+      "moves": [
+        { "name": "Double-Check", "desc": "+1 Courage. Together: +2 Courage instead." },
+        { "name": "Recall Objective", "desc": "+1 Hope. Together: +2 Hope instead." }
+      ]
+    },
+    {
+      "heading": "Long Rest",
+      "intro": "Perform Long Rest Moves (up to once each) whenever you settle down for 8 hours or more. You may choose to do so alone or Together (effects apply to every player involved). At the end of the long rest, the GM gains Hazard equal to 2 + number of players.",
+      "moves": [
+        { "name": "Feast", "desc": "+1 Hope, +1 Courage, Upkeep Food and Water. Together: Additional +1 Hope and +1 Courage." },
+        {
+          "name": "Spare Time (choose one)",
+          "options": [
+            "Explore Vicinity: Look for an opportunity nearby. Together: Additional +1 Hope/Courage.",
+            "Extra Preparations: +2 Courage. Together: +3 Courage instead.",
+            "Self-Expression: +2 Hope. Together: +3 Hope instead."
+          ]
+        },
+        {
+          "name": "Sleep: You MUST sleep",
+          "options": [
+            "Comfortable sleep: +1 Hope, +1 Courage.",
+            "Refuse Sleep, -1 Hope, -1 Courage."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Support Moves",
+      "intro": "Support moves are available to you whenever you share a moment with allies while doing a Rest move Together. You may use each of these moves once per rest.",
+      "moves": [
+        {
+          "name": "Inspire",
+          "desc": "Choose one: +1 Hope for allies if you are Virtuous (HOPE) OR have 4 or more Hope. +1 Courage for allies if you are Virtuous (COURAGE) OR have 4 or more Courage. In a single session of rest, an ally can only gain 1 Hope and 1 Courage from Inspire."
+        },
+        {
+          "name": "Empathise",
+          "desc": "Pool and redistribute Hope and Courage (separately)."
+        }
+      ]
+    }
+  ]
+}

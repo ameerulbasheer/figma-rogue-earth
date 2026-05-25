@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { Checkbox } from '../common/Checkbox'
 
 const MAX_SLOTS = 6
 
-export function CourageTracker({ courage, onToggle }) {
+export const CourageTracker = memo(function CourageTracker({ courage, onToggle, disabled }) {
   const { unlocked, filled } = courage
 
   return (
@@ -17,10 +18,11 @@ export function CourageTracker({ courage, onToggle }) {
               variant={variant}
               onClick={() => onToggle(i)}
               alert={variant === 'empty' && i === 0 && filled === 0}
+              disabled={disabled}
             />
           )
         })}
       </div>
     </div>
   )
-}
+})

@@ -1,0 +1,26 @@
+{
+  "title": "Growth Moves",
+  "intro": "Use Growth to 'level up' during play. Gain 1 Growth whenever the following occurs: Start of each session, Adding a new Necessity with Upkeep 1, Fulfilling a Necessity (Collect 10).",
+  "moves": [
+    {
+      "cost": "1 Growth",
+      "name": "Heart of Hope",
+      "description": "When an Adversary roll hits your Hope, unlock a Hope slot permanently and gain 1 Hope in order to turn the hit into a miss."
+    },
+    {
+      "cost": "1 Growth",
+      "name": "Courageous Spirit",
+      "description": "When an Adversary hits your Courage, unlock a Courage slot permanently and gain 1 Courage in order to turn the hit into a miss."
+    },
+    {
+      "cost": "1 Growth",
+      "name": "Better Under Pressure",
+      "description": "When you get anything less than a full success on an Action or Reaction roll using a learned Experience, permanently upgrade the Experience from learned to practiced in order to get a better result."
+    },
+    {
+      "cost": "1 Growth",
+      "name": "Figured You Out",
+      "description": "When an Adversary roll hits you, permanently upgrade an Experience from learned to practiced and use it to negate damage immediately."
+    }
+  ]
+}

@@ -6,12 +6,14 @@ import { LoginScreen } from './components/auth/LoginScreen'
 import { CharacterSheet } from './components/sheet/CharacterSheet'
 import { RulesReference } from './components/rules/RulesReference'
 import { GMDashboard } from './components/gm/GMDashboard'
+import { Spinner } from './components/common/Spinner'
+import { Toast } from './components/common/Toast'
 
 export default function App() {
   const { user, loading: authLoading } = useAuth()
   const [profile, setProfile] = useState(null)
   const [activeTab, setActiveTab] = useState('sheet')
-  const [state, setState, sheetLoading] = useCharacter(user?.id)
+  const [state, setState, sheetLoading, loadError, saveError, setSaveError] = useCharacter(user?.id)
 
   // Fetch or create profile when user logs in
   useEffect(() => {
@@ -30,12 +32,15 @@ export default function App() {
           supabase
             .from('profiles')
             .insert({ id: user.id, display_name: displayName })
-            .then(() => setProfile({ id: user.id, display_name: displayName, is_gm: false }))
+            .then(({ error }) => {
+              if (error) return
+              setProfile({ id: user.id, display_name: displayName, is_gm: false })
+            })
         }
       })
   }, [user])
 
-  if (authLoading) return null
+  if (authLoading) return <Spinner label="Authenticating..." />
   if (!user) return <LoginScreen />
 
   const isGM = profile?.is_gm === true
@@ -87,12 +92,21 @@ export default function App() {
           <RulesReference />
         ) : isGMTab ? (
           <GMDashboard />
+        ) : loadError ? (
+          <div className="p-8 font-mono text-sm text-mid-grey text-center">
+            <p>{loadError}</p>
+            <p className="mt-2 text-xs text-light-grey">Data is saved locally — you may need to reconnect to sync.</p>
+          </div>
         ) : sheetLoading ? (
-          <div className="p-8 font-mono text-sm text-mid-grey">Loading sheet...</div>
+          <Spinner label="Loading character sheet..." />
         ) : (
           <CharacterSheet state={state} setState={setState} mobileTab={effectiveTab} />
         )}
       </main>
+
+      {saveError && (
+        <Toast message={saveError} type="error" onDismiss={() => setSaveError(null)} />
+      )}
 
       {/* Bottom tab navigation — mobile only */}
       <nav className="fixed bottom-0 left-0 right-0 flex md:hidden border-t-2 border-dark-grey bg-white z-20">

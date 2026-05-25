@@ -1,4 +1,6 @@
-export function TormentTracker({ torment, onChange }) {
+import { memo } from 'react'
+
+export const TormentTracker = memo(function TormentTracker({ torment, onChange, readOnly }) {
   const { text, effect, active } = torment
 
   return (
@@ -8,13 +10,15 @@ export function TormentTracker({ torment, onChange }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => onChange('effect', effect === 'HOPE' ? 'COURAGE' : 'HOPE')}
-            className="font-mono text-xs border border-dark-grey px-1 rounded cursor-pointer"
+            disabled={readOnly}
+            className={`font-mono text-xs border ${readOnly ? 'border-light-grey text-light-grey cursor-default' : 'border-dark-grey cursor-pointer'} px-1 rounded`}
           >
             [{effect}]
           </button>
           <button
             onClick={() => onChange('active', !active)}
-            className={`w-3 h-3 rounded-full border border-dark-grey cursor-pointer ${active ? 'bg-dark-grey' : 'bg-transparent'}`}
+            disabled={readOnly}
+            className={`w-3 h-3 rounded-full border ${readOnly ? 'border-light-grey cursor-default' : 'border-dark-grey cursor-pointer'} ${active ? (readOnly ? 'bg-light-grey' : 'bg-dark-grey') : 'bg-transparent'}`}
             aria-label="Toggle active"
           />
         </div>
@@ -24,8 +28,9 @@ export function TormentTracker({ torment, onChange }) {
         value={text}
         onChange={e => onChange('text', e.target.value)}
         placeholder="Torment condition…"
+        readOnly={readOnly}
         className="font-body text-sm bg-transparent border-b border-dashed border-mid-grey w-full placeholder:text-light-grey"
       />
     </div>
   )
-}
+})

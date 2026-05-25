@@ -1,7 +1,9 @@
+import { memo } from 'react'
+
 // Single experience slot
 const DICE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
 
-export function ExperienceTracker({ index, experience, onChange }) {
+export const ExperienceTracker = memo(function ExperienceTracker({ index, experience, onChange, readOnly }) {
   const { name, type } = experience
   const isPracticed = type === 'practiced'
 
@@ -22,13 +24,15 @@ export function ExperienceTracker({ index, experience, onChange }) {
         value={name}
         onChange={e => onChange('name', e.target.value)}
         placeholder="Experience name…"
+        readOnly={readOnly}
         className="flex-1 font-body text-sm bg-transparent text-dark-grey placeholder:text-light-grey"
       />
       <button
         onClick={toggleType}
-        className={`text-lg leading-none flex-shrink-0 cursor-pointer select-none ${
-          isPracticed ? 'text-dark-grey' : 'text-light-grey'
-        }`}
+        disabled={readOnly}
+        className={`text-lg leading-none flex-shrink-0 select-none ${
+          readOnly ? 'cursor-default' : 'cursor-pointer'
+        } ${isPracticed ? 'text-dark-grey' : 'text-light-grey'}`}
         title="Toggle learned/practiced"
         aria-label={isPracticed ? 'Practiced' : 'Learned'}
       >
@@ -36,4 +40,4 @@ export function ExperienceTracker({ index, experience, onChange }) {
       </button>
     </div>
   )
-}
+})

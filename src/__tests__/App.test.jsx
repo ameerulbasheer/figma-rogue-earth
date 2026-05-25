@@ -9,7 +9,7 @@ vi.mock('../hooks/useAuth', () => ({
 }))
 
 vi.mock('../hooks/useCharacter', () => ({
-  useCharacter: () => [initialState, mockSetState, false],
+  useCharacter: () => [initialState, mockSetState, false, null, null, vi.fn()],
 }))
 
 import App from '../App'
@@ -93,25 +93,9 @@ describe('App — tab switching', () => {
 })
 
 describe('App — mobile tab content switching', () => {
-  function getLeftCol() {
-    // The left col wraps ResolveSection ("Hope" label is inside it)
-    return screen.getByText('Hope').closest('[class*="flex-col"]').parentElement
-      .parentElement
-  }
-
   it('Sheet tab (default): left col is visible (no hidden class)', () => {
     render(<App />)
-    // Left col contains "Hope" / "Resolve" / "Experiences"
-    expect(screen.getByText('Hope')).toBeInTheDocument()
-    // Left col container should NOT have the hidden class
-    const hopeContainer = screen.getByText('Hope').closest('div[class]')
-    // Walk up to find the column div (direct child of the grid)
-    let col = hopeContainer
-    while (col && !col.className.includes('flex-col')) {
-      col = col.parentElement
-    }
-    // The left col should be using the visible class (no 'hidden' prefix alone)
-    expect(col.className).not.toMatch(/^hidden /)
+    expect(screen.getByTestId('sheet-left-col').className).not.toMatch(/^hidden /)
   })
 
   it('Log tab: right col content is shown (Necessities header visible)', () => {
@@ -131,13 +115,7 @@ describe('App — mobile tab content switching', () => {
       b => b.textContent === 'Log'
     )
     fireEvent.click(logButton)
-    // Necessities is in the right col; its column div should be visible
-    const necessitiesEl = screen.getByText('Necessities')
-    let col = necessitiesEl.parentElement
-    while (col && !col.className.includes('gap-4')) {
-      col = col.parentElement
-    }
-    expect(col.className).not.toMatch(/^hidden /)
+    expect(screen.getByTestId('sheet-right-col').className).not.toMatch(/^hidden /)
   })
 
   it('Sheet tab: left col (Resolve/Experiences) is in the document', () => {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo } from 'react'
 import { SheetHeader } from './SheetHeader'
 import { ResolveSection } from './ResolveSection'
 import { CounterPills } from './CounterPills'
@@ -6,79 +6,49 @@ import { ExperienceSection } from './ExperienceSection'
 import { NecessitySection } from './NecessitySection'
 import { InventoryPanel } from './InventoryPanel'
 import { NotesPanel } from './NotesPanel'
+import { useResolveToggle } from '../../hooks/useResolveToggle'
 
-export function CharacterSheet({ state, setState, mobileTab = 'sheet', readOnly = false }) {
-  const [readyToLock, setReadyToLock] = useState({ hope: -1, courage: -1 })
+export const CharacterSheet = memo(function CharacterSheet({ state, setState, mobileTab = 'sheet', readOnly = false }) {
+  const onResolveToggle = useResolveToggle(setState)
 
   function handleHeaderChange(field, value) {
+    if (readOnly) return
     setState(s => ({ ...s, [field]: value }))
   }
 
-  function handleResolveToggle(track, index) {
-    const t = state.resolve[track]
-
-    if (index >= t.unlocked) {
-      // clicking a locked slot: unlock up to and including it
-      setReadyToLock(prev => ({ ...prev, [track]: -1 }))
-      setState(s => ({
-        ...s,
-        resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: Math.max(index + 1, 2) } },
-      }))
-      return
-    }
-
-    if (index === t.unlocked - 1 && index < t.filled) {
-      // last unlocked slot, currently filled → unfill and mark ready to lock (but not for first 2)
-      if (index >= 2) {
-        setReadyToLock(prev => ({ ...prev, [track]: index }))
-      }
-      setState(s => ({
-        ...s,
-        resolve: { ...s.resolve, [track]: { ...s.resolve[track], filled: index } },
-      }))
-      return
-    }
-
-    if (index === t.unlocked - 1 && index >= t.filled && readyToLock[track] === index) {
-      // last unlocked slot, currently empty, was just unfilled → lock it back (but not for first 2)
-      if (index >= 2) {
-        setReadyToLock(prev => ({ ...prev, [track]: -1 }))
-        setState(s => ({
-          ...s,
-          resolve: { ...s.resolve, [track]: { ...s.resolve[track], unlocked: Math.max(index, 2) } },
-        }))
-      }
-      return
-    }
-
-    // clicking filled slot: unfill from here
-    // clicking empty slot: fill up to and including it
-    const newFilled = index < t.filled ? index : index + 1
-    setReadyToLock(prev => ({ ...prev, [track]: -1 }))
-    setState(s => ({
-      ...s,
-      resolve: { ...s.resolve, [track]: { ...s.resolve[track], filled: newFilled } },
-    }))
-  }
-
   function handleVirtueChange(field, value) {
+    if (readOnly) return
     setState(s => ({ ...s, virtue: { ...s.virtue, [field]: value } }))
   }
 
   function handleTormentChange(field, value) {
+    if (readOnly) return
     setState(s => ({ ...s, torment: { ...s.torment, [field]: value } }))
   }
 
   function handleCounterChange(field, value) {
+    if (readOnly) return
     setState(s => ({ ...s, [field]: value }))
   }
 
   function handleExperiencesChange(next) {
+    if (readOnly) return
     setState(s => ({ ...s, experiences: next }))
   }
 
   function handleNecessitiesChange(next) {
+    if (readOnly) return
     setState(s => ({ ...s, necessities: next }))
+  }
+
+  function handleInventoryChange(v) {
+    if (readOnly) return
+    setState(s => ({ ...s, inventory: v }))
+  }
+
+  function handleNotesChange(v) {
+    if (readOnly) return
+    setState(s => ({ ...s, notes: v }))
   }
 
   const leftColClass = mobileTab === 'log'
@@ -97,45 +67,52 @@ export function CharacterSheet({ state, setState, mobileTab = 'sheet', readOnly 
         name={state.name}
         description={state.description}
         onChange={handleHeaderChange}
+        readOnly={readOnly}
       />
 
       <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
-        <div className={leftColClass}>
+        <div data-testid="sheet-left-col" className={leftColClass}>
           <ResolveSection
             resolve={state.resolve}
             virtue={state.virtue}
             torment={state.torment}
-            onResolveToggle={handleResolveToggle}
+            onResolveToggle={onResolveToggle}
             onVirtueChange={handleVirtueChange}
             onTormentChange={handleTormentChange}
+            readOnly={readOnly}
           />
           <CounterPills
             growth={state.growth}
             sync={state.sync}
             chits={state.chits}
             onChange={handleCounterChange}
+            readOnly={readOnly}
           />
           <ExperienceSection
             experiences={state.experiences}
             onChange={handleExperiencesChange}
+            readOnly={readOnly}
           />
         </div>
 
-        <div className={rightColClass}>
+        <div data-testid="sheet-right-col" className={rightColClass}>
           <NecessitySection
             necessities={state.necessities}
             onChange={handleNecessitiesChange}
+            readOnly={readOnly}
           />
           <InventoryPanel
             inventory={state.inventory}
-            onChange={v => setState(s => ({ ...s, inventory: v }))}
+            onChange={handleInventoryChange}
+            readOnly={readOnly}
           />
           <NotesPanel
             notes={state.notes}
-            onChange={v => setState(s => ({ ...s, notes: v }))}
+            onChange={handleNotesChange}
+            readOnly={readOnly}
           />
         </div>
       </div>
     </div>
   )
-}
+})

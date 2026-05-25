@@ -7,6 +7,8 @@ const LOCAL_KEY = 'rogue-earth-character'
 export function useCharacter(userId) {
   const [state, setState] = useState(initialState)
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(null)
+  const [saveError, setSaveError] = useState(null)
   const hasLoaded = useRef(false)
   const skipNextSave = useRef(false)
   const debounceRef = useRef(null)
@@ -16,6 +18,7 @@ export function useCharacter(userId) {
     if (!userId) return
 
     setLoading(true)
+    setLoadError(null)
     hasLoaded.current = false
 
     supabase
@@ -24,7 +27,9 @@ export function useCharacter(userId) {
       .eq('user_id', userId)
       .maybeSingle()
       .then(({ data, error }) => {
-        if (error) console.error('Failed to load sheet:', error)
+        if (error) {
+          setLoadError('Failed to load character sheet')
+        }
 
         if (data) {
           skipNextSave.current = true
@@ -70,10 +75,12 @@ export function useCharacter(userId) {
           { onConflict: 'user_id' }
         )
         .then(({ error }) => {
-          if (error) console.error('Failed to save sheet:', error)
+          if (error) {
+            setSaveError('Failed to save sheet — check your connection')
+          }
         })
     }, 1000)
   }, [state, userId])
 
-  return [state, setState, loading]
+  return [state, setState, loading, loadError, saveError, setSaveError]
 }
